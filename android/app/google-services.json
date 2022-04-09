@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "786163335097",
+    "project_id": "panacea-ff956",
+    "storage_bucket": "panacea-ff956.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:786163335097:android:ea8c5b2f2dd3471c928068",
+        "android_client_info": {
+          "package_name": "com.panacea.panacea"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "786163335097-oi52h5ogunhj67srjl9ciq3c7e05u8jm.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.panacea.panacea",
+            "certificate_hash": "3e7fa06f4e9f55213d36b30e34b4dcf778684afd"
+          }
+        },
+        {
+          "client_id": "786163335097-a8fcu1ukjjrn3e4kpe11soo7np69onk0.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBImISm4tGRjrtWtEPrCifzbXGH0KdIgTg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "786163335097-a8fcu1ukjjrn3e4kpe11soo7np69onk0.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
