@@ -1,41 +1,34 @@
 {
   "project_info": {
-    "project_number": "786163335097",
-    "project_id": "panacea-ff956",
-    "storage_bucket": "panacea-ff956.appspot.com"
+    "project_number": "803424866595",
+    "firebase_url": "https://panacea-a0831-default-rtdb.firebaseio.com",
+    "project_id": "panacea-a0831",
+    "storage_bucket": "panacea-a0831.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:786163335097:android:ea8c5b2f2dd3471c928068",
+        "mobilesdk_app_id": "1:803424866595:android:3a3412164701d45f727c96",
         "android_client_info": {
           "package_name": "com.panacea.panacea"
         }
       },
       "oauth_client": [
         {
-          "client_id": "786163335097-oi52h5ogunhj67srjl9ciq3c7e05u8jm.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.panacea.panacea",
-            "certificate_hash": "3e7fa06f4e9f55213d36b30e34b4dcf778684afd"
-          }
-        },
-        {
-          "client_id": "786163335097-a8fcu1ukjjrn3e4kpe11soo7np69onk0.apps.googleusercontent.com",
+          "client_id": "803424866595-lgi3jvisg8303d4dmgha6qcb93u1n489.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyBImISm4tGRjrtWtEPrCifzbXGH0KdIgTg"
+          "current_key": "AIzaSyBidGB2tnIZaX9DexSEAZ9pIj0TMjSvV5k"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "786163335097-a8fcu1ukjjrn3e4kpe11soo7np69onk0.apps.googleusercontent.com",
+              "client_id": "803424866595-lgi3jvisg8303d4dmgha6qcb93u1n489.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

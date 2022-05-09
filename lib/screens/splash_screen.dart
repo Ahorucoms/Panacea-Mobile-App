@@ -1,58 +1,74 @@
+import 'dart:async';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:panacea/screens/sign_in_options.dart';
-import 'package:panacea/widgets/app_large_text.dart';
-import 'package:panacea/widgets/app_text.dart';
+import 'package:panacea/screens/home-screen.dart';
+import 'package:panacea/screens/onboarding_screen.dart';
+import 'package:panacea/screens/yes/sign-in-with-phone-number-and-password.dart';
+import 'package:panacea/services/user_services.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
-class SplashScreen extends StatelessWidget {
- static const String id = 'splash-screen';
+class SplashScreen extends StatefulWidget {
+  static const String id = 'splash-screen';
+
+  @override
+  _SplashScreenState createState() => _SplashScreenState();
+}
+
+class _SplashScreenState extends State<SplashScreen> {
+  User? user = FirebaseAuth.instance.currentUser;
+
+  @override
+  void initState() {
+    Timer(
+        Duration(
+          seconds: 3,
+        ), () {
+      FirebaseAuth.instance.authStateChanges().listen((User? user) {
+        if (user == null) {
+          Navigator.pushReplacementNamed(context, OnBoardingScreen.id);
+        } else {
+          getUserData();
+        }
+      });
+    });
+
+    super.initState();
+  }
+
+  getUserData()async{
+    UserServices _userServices = UserServices();
+    _userServices.getUserById(user!.uid).then((result){
+      if((result.data() as Map)['address']!=null){
+        updatePrefs(result);
+      }
+      Navigator.pushReplacementNamed(context, SignInWithPhoneNumberAndPassword.id);
+    });
+  }
+
+  Future<void>updatePrefs(result)async{
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setDouble('latitude', result['latitude']);
+    prefs.setDouble('longitude', result['longitude']);
+    prefs.setString('address', result['address']);
+    prefs.setString('location', result['location']);
+    Navigator.pushReplacementNamed(context, HomeScreen.id);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
-      body: Padding(
-        padding: const EdgeInsets.all(20.0),
+      body: Center(
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisSize: MainAxisSize.min,
           children: [
-            Container(
-              padding: const EdgeInsets.only(top: 54),
-              child:
-              Center(child: AppLargeText(text: 'PANACEA',)),
+            Image.asset('images/hands.png'),
+            Text(
+              'PANACEA',
+              style: TextStyle(fontSize: 25, fontWeight: FontWeight.w700),
             ),
-            SizedBox(height: 60,),
-            Container(
-              child: Center(child: AppText(text: 'Anonymous access to\n Healthcare services',)),
-            ),
-            SizedBox(height: 70,),
-            Center(
-              child: TextButton(
-                  onPressed: (){
-                    Navigator.pushNamed(context, SignInOptions.id);
-                  },
-                  child: Text('Get Started'),),
-            ),
-            SizedBox(height: 20,),
-            Center(
-              child: Image.asset('images/doctor.png',
-              height: 250,),
-            ),
-            // Container(
-            //   height: 80,
-            //   width: 80,
-            //   decoration: BoxDecoration(
-            //     borderRadius: BorderRadius.circular(20),
-            //     color: Colors.white,
-            //     image: DecorationImage(
-            //       image: AssetImage(
-            //           'images/person.png'
-            //       ),
-            //       fit: BoxFit.cover,
-            //     )
-            //   ),
-            // )
           ],
         ),
-      )
+      ),
     );
   }
 }

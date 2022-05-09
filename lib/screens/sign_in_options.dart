@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:panacea/screens/fingerprint.dart';
-import 'package:panacea/screens/sign-in-email.dart';
-import 'package:panacea/screens/sign-in-with-phone-number.dart';
+import 'package:panacea/screens/no/sign-in-email.dart';
+import 'package:panacea/screens/yes/sign-in-with-phone-number.dart';
 import 'package:panacea/widgets/app_large_text.dart';
 import 'package:panacea/widgets/app_text.dart';
 

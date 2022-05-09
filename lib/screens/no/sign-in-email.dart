@@ -1,10 +1,10 @@
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:panacea/screens/no/confirm_email.dart';
 import 'package:panacea/screens/sign_in_options.dart';
+import 'package:panacea/screens/sign_up_options.dart';
 import 'package:panacea/widgets/app_large_text.dart';
-import 'package:panacea/widgets/app_text.dart';
-import 'package:panacea/widgets/glassmorphism.dart';
 
 class SignInEmail extends StatefulWidget {
   static const String id = 'sign-in-email';
@@ -14,7 +14,7 @@ class SignInEmail extends StatefulWidget {
 }
 
 class _SignInEmailState extends State<SignInEmail> {
-  bool _isBlur = false;
+
   final _formKey = GlobalKey<FormState>();
   Icon? icon;
   bool _visible = false;
@@ -41,24 +41,21 @@ class _SignInEmailState extends State<SignInEmail> {
                     child: Row(
                       children: [
                   IconButton(onPressed: (){
-                    Navigator.pushNamed(context, SignInOptions.id);
+                    Navigator.pushNamed(context, SignUpOptions.id);
                   },
               icon: Icon(CupertinoIcons.arrow_left, color: Colors.black,)),
-                        SizedBox(width: 60,),
-                       Center(child: AppLargeText(text: 'Sign In',)
+                        SizedBox(width: 70,),
+                       Center(child: Text('Log in',
+                       style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
+                       textAlign: TextAlign.center,
+                       ),
                        // Text('Sign In')
                        ),
 
                       ],
                     ),
                   ),
-                  SizedBox(
-                    height: 30,
-                  ),
-                  Container(
-                    child: Center(child: Text('Anonymous access to\n Healthcare services')),
-                  ),
-                  SizedBox(height: 30,),
+                  SizedBox(height: 50,),
                   Container(
                     child: TextFormField(
                       cursorColor: Colors.black,
@@ -155,16 +152,19 @@ class _SignInEmailState extends State<SignInEmail> {
                     ),
                   ),
                   SizedBox(
-                    height: 20,
+                    height: 40,
                   ),
                   Center(
-                    child: TextButton(onPressed: (){},
-                        child: Text('Sign In')),
+                    child: TextButton(onPressed: (){
+                      Navigator.pushNamed(context, ConfirmEmail.id);
+                    },
+                        child: Text('Log In'),
+                    ),
                   ),
                   SizedBox(
                     height: 10,
                   ),
-                  Center(child: AppLargeText(text: 'OR')),
+                  Text('OR', style: TextStyle(fontSize: 16,fontWeight: FontWeight.bold),),
                   SizedBox(
                     height: 10,
                   ),
@@ -181,33 +181,19 @@ class _SignInEmailState extends State<SignInEmail> {
                         SizedBox(width: 10,),
                         Center(child: Text('Sign in with Google')),
                       ],
-                    ),),
-                  SizedBox(height: 5,),
-                  Stack(
+                    ),
+                ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Center(
-                        child: GestureDetector(
-                          onTap: (){
-                            setState(() {
-                              _isBlur = !_isBlur;
-                            });
-                          },
-                          child: GlassMorphism(
-                            blur: _isBlur ? 20 : 0,
-                            opacity: 0.2,
-                            //we will change this later
-                            child: const SizedBox(
-                              height: 210,
-                              width: 320,
-                            ),
-                          ),
-                        ),
-                      )
+                      Text('Not having Account?'),
+                      TextButton(onPressed: (){
+                        Navigator.pushNamed(context, SignInOptions.id);
+                      },
+                          child: Text('Sign Up Now'))
                     ],
-                  ),
-                  TextButton(
-                      onPressed: (){},
-                      child: Text('Not having Account?'))
+                  )
+
                 ],
               ),
             ),
