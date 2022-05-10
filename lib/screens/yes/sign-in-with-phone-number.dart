@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:panacea/providers/auth_provider.dart';
 import 'package:panacea/providers/location_provider.dart';
 import 'package:panacea/screens/sign_in_options.dart';
+import 'package:panacea/screens/yes/sign-in-with-phone-number-and-password.dart';
 import 'package:panacea/screens/yes/verify_phone_number.dart';
 import 'package:panacea/services/user_simple_preferences.dart';
 import 'package:panacea/widgets/app_large_text.dart';
@@ -115,6 +116,22 @@ class _SignInWithPhoneNumberState extends State<SignInWithPhoneNumber> {
                       },
                           child: Text('Sign up')),
                   ],
+                ),
+                SizedBox(height: 30,),
+                Center(
+                  child: Row(
+                    children: [
+                      Text('Already have an Account?'),
+                      TextButton(
+                          onPressed: (){
+                            Navigator.of(context).push(MaterialPageRoute(builder: (context){
+                              return SignInWithPhoneNumberAndPassword();
+                            }));
+                          },
+                          child: Text('Login'),
+                      ),
+                    ],
+                  ),
                 ),
                 SizedBox(height: 30,),
                 Center(child: Text('Or sign up with'),),

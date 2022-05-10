@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -142,23 +143,21 @@ class _SignInWithPhoneNumberAndPasswordState extends State<SignInWithPhoneNumber
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  TextButton(onPressed: () {
+                  TextButton(onPressed: () async{
+                 await FirebaseFirestore.instance.collection('users')
+                       .where('number',isEqualTo: _phone)
+                       .where('password',isEqualTo: password)
+                       .get().then((value) {
+                         print(value.size);
+                 });
+                // print("this is resulr ${result}");
+                    // auth.login(phone: "+250780640237",password: "12345678");
                     // if(_phone == ""){
                     //   setState(() {
                     //     print('Your phone number could not be validated');
                     //   });
                     // }
 
-                    String number ='${_phone}';
-                    auth.verifyPhone(
-                      context: context,
-                      number: number,
-
-                    ).then((value){
-                      setState(() {
-                        auth.loading = false; //to disable circle indicator
-                      });
-                    });
                   },
                       child: Text('Log in')),
                 ],

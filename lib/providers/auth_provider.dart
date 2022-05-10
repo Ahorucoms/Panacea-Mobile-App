@@ -237,6 +237,17 @@ class AuthProvider with ChangeNotifier {
     this.loading = false;
     notifyListeners();
   }
+  void login({String? phone, String? password}) {
+    _userServices.Login({
+
+      'number': phone,
+      'password' : password,
+
+
+    });
+    this.loading = false;
+    notifyListeners();
+  }
 
   void updateUser({String? id,
     String? number}) {
