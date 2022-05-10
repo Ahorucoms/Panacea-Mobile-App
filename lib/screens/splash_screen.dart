@@ -3,9 +3,9 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:panacea/screens/home-screen.dart';
 import 'package:panacea/screens/onboarding_screen.dart';
-import 'package:panacea/screens/yes/sign-in-with-phone-number-and-password.dart';
 import 'package:panacea/services/user_services.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'no/phone_password/sign-in-with-phone-number-and-password.dart';
 
 class SplashScreen extends StatefulWidget {
   static const String id = 'splash-screen';

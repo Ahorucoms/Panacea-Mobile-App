@@ -1,27 +1,17 @@
-import 'package:email_validator/email_validator.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:panacea/screens/no/confirmed_email.dart';
+import 'package:panacea/screens/no/phone_password/sign-in-with-phone-number.dart';
 import 'package:panacea/screens/sign_up_options.dart';
-import 'package:panacea/widgets/app_large_text.dart';
 import 'package:pin_entry_text_field/pin_entry_text_field.dart';
 
-class ConfirmEmail extends StatefulWidget {
-  static const String id = 'confirm-email';
+class VerifyPhoneNumber extends StatefulWidget {
+  static const String id = 'verify-phone-number';
 
   @override
-  State<ConfirmEmail> createState() => _ConfirmEmailState();
+  _VerifyPhoneNumberState createState() => _VerifyPhoneNumberState();
 }
 
-class _ConfirmEmailState extends State<ConfirmEmail> {
-
-  final _formKey = GlobalKey<FormState>();
-  Icon? icon;
-  var _emailTextController = TextEditingController();
-  var _pinTextController = TextEditingController();
-  String? email;
-  String? pin;
-
+class _VerifyPhoneNumberState extends State<VerifyPhoneNumber> {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -29,7 +19,6 @@ class _ConfirmEmailState extends State<ConfirmEmail> {
         backgroundColor: Colors.white,
         resizeToAvoidBottomInset : false,
         body: Form(
-          key: _formKey,
           child: Padding(
             padding: const EdgeInsets.only(left: 20, right: 20),
             child: Column(
@@ -59,20 +48,17 @@ class _ConfirmEmailState extends State<ConfirmEmail> {
                   height: 30,
                 ),
                 Container(
-                  child: Center(child: Text('Enter the 4 digit code we sent you\n via email to continue')),
+                  child: Center(child: Text('Enter the 6 digit code we sent you\n via email to continue')),
                 ),
                 SizedBox(height: 60,),
                 PinEntryTextField(
                   showFieldAsBox: true,
                   onSubmit: (String pin){
-                    showDialog(
-                        context: context,
-                        builder: (context){
-                          return AlertDialog(
-                            title: Text('Pin'),
-                            content: Text('Pin entered is $pin'),
-                          );
-                        });
+                    // showDialog(
+                    //     context: context,
+                    //     builder: (context){
+                    //       return YesCreatePassword();
+                    //     });
                   },
                 ),
                 SizedBox(height: 30,),
@@ -82,7 +68,7 @@ class _ConfirmEmailState extends State<ConfirmEmail> {
                 ),
                 Center(
                   child: TextButton(onPressed: (){
-                    Navigator.pushNamed(context, ConfirmedEmail.id);
+                    Navigator.pushNamed(context, SignInWithPhoneNumber.id);
                   },
                     child: Text('Resend code'),
                   ),

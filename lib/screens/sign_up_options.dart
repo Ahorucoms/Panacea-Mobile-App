@@ -1,10 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:panacea/screens/home-screen.dart';
-import 'package:panacea/screens/no/create_account.dart';
-import 'package:panacea/screens/no/no_sign_in_with_phone_number.dart';
-import 'package:panacea/screens/no/sign-in-email.dart';
-import 'package:panacea/screens/yes/sign-in-with-phone-number.dart';
+import 'package:panacea/screens/multiple_sign_up_options.dart';
+import 'package:panacea/screens/sign_in_options.dart';
+import 'package:panacea/screens/yes/backup_keys.dart';
 import 'package:panacea/widgets/app_large_text.dart';
 
 class SignUpOptions extends StatelessWidget {
@@ -48,13 +46,13 @@ class SignUpOptions extends StatelessWidget {
               children: [
                   TextButton(
                     onPressed: (){
-                      Navigator.pushNamed(context, SignInWithPhoneNumber.id);
+                      Navigator.pushNamed(context, BackupKeys.id);
                     },
                       child: Center(child: Text('YES', textAlign: TextAlign.center,)),
                   ),
                 SizedBox(width: 20,),
                  TextButton(onPressed: (){
-                   Navigator.pushNamed(context, NoSignInWithPhoneNumber.id);
+                   Navigator.pushNamed(context, MultipleSignUpOptions.id);
                  },
                         child: Center(child: Text('NO'))),
 

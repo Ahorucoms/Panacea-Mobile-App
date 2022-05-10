@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:panacea/screens/no/confirmed_email.dart';
+import 'package:panacea/screens/no/email_password/confirmed_email.dart';
 import 'package:panacea/screens/sign_up_options.dart';
 import 'package:pin_entry_text_field/pin_entry_text_field.dart';
 

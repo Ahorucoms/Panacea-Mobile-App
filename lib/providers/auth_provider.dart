@@ -6,10 +6,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:panacea/providers/location_provider.dart';
 import 'package:panacea/screens/home-screen.dart';
+import 'package:panacea/screens/no/phone_password/sign-in-with-phone-number-and-password.dart';
+import 'package:panacea/screens/no/phone_password/sign-in-with-phone-number.dart';
+import 'package:panacea/screens/no/phone_password/yes_create_password.dart';
 import 'package:panacea/screens/onboarding_screen.dart';
-import 'package:panacea/screens/yes/sign-in-with-phone-number-and-password.dart';
-import 'package:panacea/screens/yes/sign-in-with-phone-number.dart';
-import 'package:panacea/screens/yes/yes_create_password.dart';
 import 'package:panacea/services/user_services.dart';
 import 'package:pin_entry_text_field/pin_entry_text_field.dart';
 

@@ -4,22 +4,24 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:panacea/providers/auth_provider.dart';
 import 'package:panacea/providers/location_provider.dart';
-import 'package:panacea/screens/no/confirm_email.dart';
-import 'package:panacea/screens/no/confirmed_email.dart';
-import 'package:panacea/screens/no/create_account.dart';
-import 'package:panacea/screens/no/create_password.dart';
+import 'package:panacea/screens/multiple_sign_up_options.dart';
+import 'package:panacea/screens/no/email_password/confirm_email.dart';
+import 'package:panacea/screens/no/email_password/confirmed_email.dart';
+import 'package:panacea/screens/no/email_password/create_account.dart';
+import 'package:panacea/screens/no/email_password/create_password.dart';
 import 'package:panacea/screens/fingerprint.dart';
 import 'package:panacea/screens/home-screen.dart';
-import 'package:panacea/screens/no/no_sign_in_with_phone_number.dart';
+import 'package:panacea/screens/no/email_password/no_sign_in_with_phone_number.dart';
+import 'package:panacea/screens/no/email_password/sign-in-email.dart';
+import 'package:panacea/screens/no/phone_password/sign-in-with-phone-number.dart';
+import 'package:panacea/screens/no/phone_password/verify_phone_number.dart';
+import 'package:panacea/screens/no/phone_password/yes_create_password.dart';
 import 'package:panacea/screens/onboarding_screen.dart';
-import 'package:panacea/screens/no/sign-in-email.dart';
-import 'package:panacea/screens/splash_screen.dart';
-import 'package:panacea/screens/yes/sign-in-with-phone-number.dart';
+import 'package:panacea/screens/yes/backup_keys.dart';
 import 'package:panacea/screens/sign_in_options.dart';
 import 'package:panacea/screens/sign_up_options.dart';
-import 'package:panacea/screens/yes/verify_phone_number.dart';
-import 'package:panacea/screens/yes/yes_create_password.dart';
-import 'package:panacea/services/user_services.dart';
+import 'package:panacea/screens/yes/send_key_to_email.dart';
+import 'package:panacea/screens/yes/send_key_to_phonme_number.dart';
 import 'package:panacea/services/user_simple_preferences.dart';
 import 'package:provider/provider.dart';
 
@@ -71,6 +73,10 @@ class MyApp extends StatelessWidget {
         CreatePassword.id:(context) => CreatePassword(),
         CreateAccount.id:(context) => CreateAccount(),
         SignInWithPhoneNumber.id:(context)=> SignInWithPhoneNumber(),
+        MultipleSignUpOptions.id:(context) => MultipleSignUpOptions(),
+        BackupKeys.id:(context) => BackupKeys(),
+        SendKeyToPhoneNumber.id:(context) => SendKeyToPhoneNumber(),
+        SendKeyToEmail.id:(context) => SendKeyToEmail(),
         VerifyPhoneNumber.id:(context) => VerifyPhoneNumber(),
         YesCreatePassword.id:(context) => YesCreatePassword(""),
         NoSignInWithPhoneNumber.id:(context) => NoSignInWithPhoneNumber(),

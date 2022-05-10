@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:panacea/screens/fingerprint.dart';
-import 'package:panacea/screens/no/email_password/sign-in-email.dart';
+import 'package:panacea/screens/yes/send_key_to_email.dart';
+import 'package:panacea/screens/yes/send_key_to_phonme_number.dart';
 import 'package:panacea/widgets/app_large_text.dart';
 import 'package:panacea/widgets/app_text.dart';
-import 'package:panacea/widgets/size_configs.dart';
 
-class SignInOptions extends StatelessWidget {
-  static const String id = 'sign-in-options';
+class BackupKeys extends StatelessWidget {
+ static const String id = 'backup-keys';
 
   @override
   Widget build(BuildContext context) {
@@ -30,40 +30,46 @@ class SignInOptions extends StatelessWidget {
               ),
               SizedBox(height: 50,),
               Container(
-                child: Center(child: Text('PANACEA IS ANONYMOUS'))
+                  child: Center(child: Text('Backup Your Keys'))
               ),
               SizedBox(height: 20,),
               Container(
                 child: TextButton(onPressed: (){
                   Navigator.pushNamed(context, Fingerprint.id);
                 },
-                    child: Center(child: Text('Would you like to remain anonymous?'))),
-              ), 
+                    child: Center(child:TextButton(onPressed: (){
+                      Navigator.pushReplacementNamed(context, SendKeyToEmail.id);
+                    },
+                      child: Text('Send Keys To Your Email',
+                        textAlign: TextAlign.center,),
+                    ),
+                    ),
+                ),
+              ),
               SizedBox(
                 height: 20,
               ),
-              Center(child: Text('You can also Sign In with email or\n telephone number',
-              textAlign: TextAlign.center,),
+              Center(child: TextButton(onPressed: (){
+                Navigator.pushReplacementNamed(context, SendKeyToPhoneNumber.id);
+              },
+                child: Text('Send Keys To Your SMS',
+                  textAlign: TextAlign.center,),
+              ),
               ),
               SizedBox(
                 height: 140,
               ),
               Container(
                 child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    TextButton(onPressed: (){
-                      Navigator.pushNamed(context, SignInEmail.id);
-                    },
-                        child: Text('Sign in with email'),),
-                    SizedBox(width: SizeConfig.screenWidth! * .012,),
-                    Padding(
-                      padding: const EdgeInsets.only(left: 20),
-                      child: TextButton(onPressed: (){},
-                          child: Text('Telephone number'),),
+                    TextButton(onPressed: (){},
+                     child: Text('Backup Wallet',
+                     textAlign: TextAlign.center,),
                     ),
                   ],
                 ),
-              )
+                ),
             ],
           ),
         )

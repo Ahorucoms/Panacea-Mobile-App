@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:panacea/screens/fingerprint.dart';
 import 'package:panacea/screens/no/email_password/sign-in-email.dart';
+import 'package:panacea/screens/no/phone_password/sign-in-with-phone-number.dart';
 import 'package:panacea/widgets/app_large_text.dart';
 import 'package:panacea/widgets/app_text.dart';
 import 'package:panacea/widgets/size_configs.dart';
 
-class SignInOptions extends StatelessWidget {
-  static const String id = 'sign-in-options';
+class MultipleSignInOptions extends StatelessWidget {
+  const MultipleSignInOptions({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -30,7 +31,7 @@ class SignInOptions extends StatelessWidget {
               ),
               SizedBox(height: 50,),
               Container(
-                child: Center(child: Text('PANACEA IS ANONYMOUS'))
+                  child: Center(child: Text('PANACEA IS ANONYMOUS'))
               ),
               SizedBox(height: 20,),
               Container(
@@ -38,12 +39,12 @@ class SignInOptions extends StatelessWidget {
                   Navigator.pushNamed(context, Fingerprint.id);
                 },
                     child: Center(child: Text('Would you like to remain anonymous?'))),
-              ), 
+              ),
               SizedBox(
                 height: 20,
               ),
               Center(child: Text('You can also Sign In with email or\n telephone number',
-              textAlign: TextAlign.center,),
+                textAlign: TextAlign.center,),
               ),
               SizedBox(
                 height: 140,
@@ -54,12 +55,14 @@ class SignInOptions extends StatelessWidget {
                     TextButton(onPressed: (){
                       Navigator.pushNamed(context, SignInEmail.id);
                     },
-                        child: Text('Sign in with email'),),
+                      child: Text('Sign in with email'),),
                     SizedBox(width: SizeConfig.screenWidth! * .012,),
                     Padding(
                       padding: const EdgeInsets.only(left: 20),
-                      child: TextButton(onPressed: (){},
-                          child: Text('Telephone number'),),
+                      child: TextButton(onPressed: (){
+                        Navigator.pushNamed(context, SignInWithPhoneNumber.id);
+                      },
+                        child: Text('Telephone number'),),
                     ),
                   ],
                 ),

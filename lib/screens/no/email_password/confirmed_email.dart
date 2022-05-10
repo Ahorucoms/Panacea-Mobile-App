@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:panacea/screens/no/confirm_email.dart';
-import 'package:panacea/screens/no/create_password.dart';
+import 'package:panacea/screens/no/email_password/confirm_email.dart';
+import 'package:panacea/screens/no/email_password/create_password.dart';
 import 'package:panacea/widgets/app_large_text.dart';
 
 class ConfirmedEmail extends StatelessWidget {
