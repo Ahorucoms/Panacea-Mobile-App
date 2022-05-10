@@ -2,16 +2,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:panacea/screens/model/family_dependant.dart';
 import 'package:panacea/widgets/dependants.dart';
+import 'package:panacea/widgets/size_configs.dart';
 
-class CardItem {
-   final List<String> urlImages;
-   final String title;
 
-  const CardItem({
-    required this.urlImages,
-    required this.title
-});
-}
 
 class HomePage extends StatefulWidget {
 
@@ -22,31 +15,23 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
 
 
-  List<CardItem> items =[
-    CardItem(
-      urlImages: [
-        'images/linda.jpg',
-      ],
-      title: 'Linda',
-    ),
-    CardItem(
-      urlImages: [
-        'images/lydia.jpg',
-      ],
-      title: 'Lydia',
-    ),
-    CardItem(
-      urlImages: [
-        'images/tomas.jpg',
-      ],
-      title: 'Thomas',
-    ),
-    CardItem(
-      urlImages: [
-        'images/doctor.png',
-      ],
-      title: 'Doctor',
-    ),
+  List items =[
+  {
+    'image':'images/linda.jpg',
+  'title':'linda'
+},
+    {
+      'image':'images/lydia.jpg',
+      'title':'lydia'
+    }
+    , {
+      'image':'images/tomas.jpg',
+      'title':'Thomas'
+    }
+    , {
+      'image':'images/doctor.png',
+      'title':'Doctor'
+    }
   ];
   @override
   Widget build(BuildContext context) {
@@ -87,16 +72,41 @@ class _HomePageState extends State<HomePage> {
                     Expanded(
                       flex: 8,
                         child: SizedBox(
-                          height: 140,
+                          height: SizeConfig.screenHeight! * .200,
                           child: ListView.separated(
                             scrollDirection: Axis.horizontal,
                               padding: const EdgeInsets.all(12),
                               itemCount: items.length,
                               separatorBuilder: (context, index){
-                              return const SizedBox(width: 12,);
+                              return const SizedBox(width: 5,);
                               },
                               itemBuilder: (context, index){
-                              return buildDependant(item: items[index]);
+                              return Container(
+                                // width: 200,
+                                child:   Column(
+                                  children: [
+                                    Expanded(child:
+                                    Column(
+                                      children: [
+                                        Image.asset(
+                                          "${items[index]['image']}",
+                                          height: 40,
+                                          width: 40,
+                                          fit: BoxFit.cover,
+                                        ),
+                                        Text(items[index]['title']),
+                                      ],
+                                    ),
+                                    ),
+
+                                    // SizedBox(height: 8,),
+
+                                    // Text(items[index]['title'])),
+
+                                  ],
+
+                                ),
+                              );;
                               }),
                         ),
                     ),
@@ -138,23 +148,23 @@ class _HomePageState extends State<HomePage> {
       ),
     );
   }
-  Widget buildDependant({
-  required CardItem item,
-}) => Container(
-    width: 200,
-  child:   Column(
-      children: [
-        Expanded(child: Image.asset(
-           "${item.urlImages}",
-          fit: BoxFit.cover,
-        ))
-
-       // SizedBox(height: 8,),
-
-        // Text(item.title),
-
-      ],
-
-    ),
-);
+//   Widget buildDependant({
+//   required List item,
+// }) => Container(
+//     width: 200,
+//   child:   Column(
+//       children: [
+//         Expanded(child: Image.asset(
+//            "${item.}",
+//           fit: BoxFit.cover,
+//         ))
+//
+//        // SizedBox(height: 8,),
+//
+//         // Text(item.title),
+//
+//       ],
+//
+//     ),
+// );
 }

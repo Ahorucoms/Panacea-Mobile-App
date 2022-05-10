@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:panacea/providers/auth_provider.dart';
 import 'package:panacea/providers/location_provider.dart';
+import 'package:panacea/screens/home-screen.dart';
 import 'package:panacea/screens/sign_in_options.dart';
 import 'package:panacea/screens/yes/verify_phone_number.dart';
 import 'package:panacea/widgets/app_large_text.dart';
@@ -25,7 +26,7 @@ class _SignInWithPhoneNumberAndPasswordState extends State<SignInWithPhoneNumber
   var _passwordTextController = TextEditingController();
   Icon? icon;
   bool _visible = false;
-  String? password;
+  String password='';
   String? confirmPassword;
   bool _isLoading = false;
   String? number;
@@ -88,20 +89,25 @@ class _SignInWithPhoneNumberAndPasswordState extends State<SignInWithPhoneNumber
               SizedBox( height: SizeConfig.screenHeight! * .025,),
               Container(
                 child: TextFormField(
+
+
+
                   cursorColor: Colors.black,
                   style: TextStyle(color: Colors.black),
                   controller: _passwordTextController,
                   validator: (value){
+                    setState(() {
+                      password = value.toString();
+                    });
+
                     if(value!.isEmpty){
                       return 'Please Enter a Password';
                     }
                     if(value.length < 8){
                       return 'Password must be at least 8 characters';
                     }
-                    setState(() {
-                      password = value;
-                    });
-                    return null;
+
+                    // return null;
                   },
                   obscureText: _visible == false ? true : false,
                   decoration: InputDecoration(
@@ -146,9 +152,20 @@ class _SignInWithPhoneNumberAndPasswordState extends State<SignInWithPhoneNumber
                   TextButton(onPressed: () async{
                  await FirebaseFirestore.instance.collection('users')
                        .where('number',isEqualTo: _phone)
-                       .where('password',isEqualTo: password)
+                       // .where('password',isEqualTo: password)
                        .get().then((value) {
-                         print(value.size);
+                        if(value.size==1){
+                            if(value.docs.first['password']==_passwordTextController.text){
+                              // print(value.docs.first['password']);
+                              Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context){
+                                return HomeScreen(uid: value.docs[0].id);
+                              }));
+                            }else{
+                              print("password dont match");
+                            }
+                        }else{
+                          print(value.size);
+                        }
                  });
                 // print("this is resulr ${result}");
                     // auth.login(phone: "+250780640237",password: "12345678");

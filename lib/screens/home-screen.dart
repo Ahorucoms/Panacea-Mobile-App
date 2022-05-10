@@ -8,7 +8,8 @@ import 'package:panacea/pages/settings_page.dart';
 
 class HomeScreen extends StatefulWidget {
   static const String id = 'home-screen';
-
+  String uid;
+   HomeScreen({required this.uid});
   @override
   State<HomeScreen> createState() => _HomeScreenState();
 }

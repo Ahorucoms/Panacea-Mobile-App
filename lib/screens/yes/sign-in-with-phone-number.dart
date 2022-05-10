@@ -120,6 +120,7 @@ class _SignInWithPhoneNumberState extends State<SignInWithPhoneNumber> {
                 SizedBox(height: 30,),
                 Center(
                   child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text('Already have an Account?'),
                       TextButton(
