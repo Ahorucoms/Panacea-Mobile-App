@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:panacea/screens/fingerprint.dart';
 import 'package:panacea/screens/no/email_password/sign-in-email.dart';
 import 'package:panacea/screens/no/phone_password/sign-in-with-phone-number.dart';
 import 'package:panacea/widgets/app_large_text.dart';
@@ -35,9 +34,7 @@ class MultipleSignUpOptions extends StatelessWidget {
               ),
               SizedBox(height: 20,),
               Container(
-                child: TextButton(onPressed: (){
-                  Navigator.pushNamed(context, Fingerprint.id);
-                },
+                child: TextButton(onPressed: (){},
                     child: Center(child: Text('Would you like to remain anonymous?'))),
               ),
               SizedBox(

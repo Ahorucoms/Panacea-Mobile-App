@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:panacea/screens/no/sign-in-email.dart';
-import 'package:panacea/screens/yes/sign-in-with-phone-number.dart';
+import 'package:panacea/screens/no/email_password/sign-in-email.dart';
+import 'package:panacea/screens/no/phone_password/sign-in-with-phone-number.dart';
 import 'package:panacea/widgets/app_large_text.dart';
 import 'package:panacea/widgets/app_text.dart';
 

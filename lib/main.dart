@@ -9,7 +9,6 @@ import 'package:panacea/screens/no/email_password/confirm_email.dart';
 import 'package:panacea/screens/no/email_password/confirmed_email.dart';
 import 'package:panacea/screens/no/email_password/create_account.dart';
 import 'package:panacea/screens/no/email_password/create_password.dart';
-import 'package:panacea/screens/fingerprint.dart';
 import 'package:panacea/screens/home-screen.dart';
 import 'package:panacea/screens/no/email_password/no_sign_in_with_phone_number.dart';
 import 'package:panacea/screens/no/email_password/sign-in-email.dart';
@@ -80,7 +79,6 @@ class MyApp extends StatelessWidget {
         VerifyPhoneNumber.id:(context) => VerifyPhoneNumber(),
         YesCreatePassword.id:(context) => YesCreatePassword(""),
         NoSignInWithPhoneNumber.id:(context) => NoSignInWithPhoneNumber(),
-        Fingerprint.id:(context)=> Fingerprint(),
         HomeScreen.id:(context)=> HomeScreen(),
       },
     );
