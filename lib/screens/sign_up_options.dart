@@ -1,7 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:panacea/screens/multiple_sign_up_options.dart';
-import 'package:panacea/screens/sign_in_options.dart';
 import 'package:panacea/screens/yes/backup_keys.dart';
 import 'package:panacea/widgets/app_large_text.dart';
 

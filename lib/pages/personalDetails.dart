@@ -6,14 +6,14 @@ import 'package:panacea/providers/auth_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-class AddDependant extends StatefulWidget {
-  const AddDependant({Key? key}) : super(key: key);
+class PersonalDetailPage extends StatefulWidget {
+  const PersonalDetailPage({Key? key}) : super(key: key);
 
   @override
-  State<AddDependant> createState() => _AddDependantState();
+  State<PersonalDetailPage> createState() => _PersonalDetailPageState();
 }
 
-class _AddDependantState extends State<AddDependant> {
+class _PersonalDetailPageState extends State<PersonalDetailPage> {
   String? names, id_number, weight, phone, ins_number;
   DateTime selectedDate = DateTime(1950);
   String? option;
@@ -63,7 +63,7 @@ class _AddDependantState extends State<AddDependant> {
         backgroundColor: Color(0xffE4E3F0),
         centerTitle: true,
         title: Text(
-          'Add Dependant',
+          'Personal Details',
           style: TextStyle(color: Colors.black),
         ),
       ),

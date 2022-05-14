@@ -12,7 +12,28 @@ class LocationProvider with ChangeNotifier{
   var selectedAddress;
   bool loading = false;
 
+  // Future<Position?> determinePosition() async {
+  //   LocationPermission permission;
+  //   permission = await Geolocator.checkPermission();
+  //   if (permission == LocationPermission.denied) {
+  //     permission = await Geolocator.requestPermission();
+  //     if (permission == LocationPermission.deniedForever) {
+  //       return Future.error('Location Not Available');
+  //     }
+  //   } else {
+  //     throw Exception('Error');
+  //   }
+  //   return getCurrentPosition();
+  // }
   Future<Position> getCurrentPosition()async{
+    LocationPermission permission;
+    permission = await Geolocator.checkPermission();
+    if(permission == LocationPermission.denied){
+      permission = await Geolocator.requestPermission();
+      if (permission == LocationPermission.deniedForever) {
+        return Future.error('Location Not Available');
+      }
+    }
     Position position = await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
     if(position!=null){
 
