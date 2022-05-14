@@ -10,6 +10,7 @@ import 'package:panacea/screens/no/phone_password/sign-in-with-phone-number-and-
 import 'package:panacea/screens/no/phone_password/sign-in-with-phone-number.dart';
 import 'package:panacea/screens/no/phone_password/yes_create_password.dart';
 import 'package:panacea/screens/onboarding_screen.dart';
+import 'package:panacea/services/dependant_service.dart';
 import 'package:panacea/services/user_services.dart';
 import 'package:pin_entry_text_field/pin_entry_text_field.dart';
 
@@ -19,6 +20,8 @@ class AuthProvider with ChangeNotifier {
   String? verificationId;
   String error = '';
   UserServices _userServices = UserServices();
+  DependantServices _dependantServices = DependantServices();
+
   bool loading = false;
   LocationProvider locationData = LocationProvider();
   String? screen;
@@ -31,25 +34,24 @@ class AuthProvider with ChangeNotifier {
   double? longitude;
   String? address;
   String? location;
-   String number='';
+  String number = '';
   DocumentSnapshot? snapshot;
 
   CollectionReference _users = FirebaseFirestore.instance.collection('users');
-
-
-
 
   Future<void> verifyPhone({BuildContext? context, String? number}) async {
     this.loading = true;
     notifyListeners();
 
-    final PhoneVerificationCompleted verificationCompleted = (PhoneAuthCredential credential) async {
+    final PhoneVerificationCompleted verificationCompleted =
+        (PhoneAuthCredential credential) async {
       this.loading = false;
       notifyListeners();
       await _auth.signInWithCredential(credential);
     };
 
-    final PhoneVerificationFailed verificationFailed = (FirebaseAuthException e) {
+    final PhoneVerificationFailed verificationFailed =
+        (FirebaseAuthException e) {
       this.loading = false;
       print(e.code);
       this.error = e.toString();
@@ -87,7 +89,7 @@ class AuthProvider with ChangeNotifier {
           return SafeArea(
             child: Scaffold(
               backgroundColor: Colors.white,
-              resizeToAvoidBottomInset : false,
+              resizeToAvoidBottomInset: false,
               body: Form(
                 key: _formKey,
                 child: Padding(
@@ -100,18 +102,27 @@ class AuthProvider with ChangeNotifier {
                       Container(
                         child: Row(
                           children: [
-                            IconButton(onPressed: (){
-                              Navigator.pushNamed(context, SignInWithPhoneNumber.id);
-                            },
-                                icon: Icon(CupertinoIcons.arrow_left, color: Colors.black,)),
-                            SizedBox(width: 1,),
-                            Center(child: Text('Confirm your email address',
-                              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-                              textAlign: TextAlign.center,
+                            IconButton(
+                                onPressed: () {
+                                  Navigator.pushNamed(
+                                      context, SignInWithPhoneNumber.id);
+                                },
+                                icon: Icon(
+                                  CupertinoIcons.arrow_left,
+                                  color: Colors.black,
+                                )),
+                            SizedBox(
+                              width: 1,
                             ),
+                            Center(
+                              child: Text(
+                                'Confirm your email address',
+                                style: TextStyle(
+                                    fontSize: 20, fontWeight: FontWeight.bold),
+                                textAlign: TextAlign.center,
+                              ),
                               // Text('Sign In')
                             ),
-
                           ],
                         ),
                       ),
@@ -119,44 +130,58 @@ class AuthProvider with ChangeNotifier {
                         height: 30,
                       ),
                       Container(
-                        child: Center(child: Text('Enter the 6 digit code we sent you\n via email to continue')),
+                        child: Center(
+                            child: Text(
+                                'Enter the 6 digit code we sent you\n via email to continue')),
                       ),
-                      SizedBox(height: 60,),
+                      SizedBox(
+                        height: 60,
+                      ),
                       PinEntryTextField(
                         showFieldAsBox: true,
-                        onSubmit: (String pin) async{
+                        onSubmit: (String pin) async {
                           this.smsOtp = pin;
                           try {
                             PhoneAuthCredential phoneAuthCredential =
-                            PhoneAuthProvider.credential(verificationId: verificationId!, smsCode: smsOtp!);
+                                PhoneAuthProvider.credential(
+                                    verificationId: verificationId!,
+                                    smsCode: smsOtp!);
 
-                            final User? user = (await _auth.signInWithCredential(phoneAuthCredential)).user;
+                            final User? user = (await _auth
+                                    .signInWithCredential(phoneAuthCredential))
+                                .user;
 
                             if (user != null) {
                               this.loading = false;
                               notifyListeners();
 
-                              _userServices.getUserById(user.uid).then((snapShot) {
-
+                              _userServices
+                                  .getUserById(user.uid)
+                                  .then((snapShot) {
                                 if (snapShot.exists) {
-
                                   //User data already exists
                                   if (this.screen == 'Login') {
-                                    if ((snapShot.data() as Map)['address'] != null) {
-                                      Navigator.pushReplacementNamed(context, HomeScreen.id);
+                                    if ((snapShot.data() as Map)['address'] !=
+                                        null) {
+                                      Navigator.pushReplacementNamed(
+                                          context, HomeScreen.id);
                                     }
-                                    Navigator.pushReplacementNamed(context, OnBoardingScreen.id);
+                                    Navigator.pushReplacementNamed(
+                                        context, OnBoardingScreen.id);
                                   } else {
-
                                     //Need to update new selected address
-                                    updateUser(id: user.uid, number: user.phoneNumber);
-                                    Navigator.pushReplacementNamed(context, YesCreatePassword.id);
+                                    updateUser(
+                                        id: user.uid, number: user.phoneNumber);
+                                    Navigator.pushReplacementNamed(
+                                        context, YesCreatePassword.id);
                                   }
                                 } else {
-                                  _createUser(id: user.uid, number: user.phoneNumber);
+                                  _createUser(
+                                      id: user.uid, number: user.phoneNumber);
                                   // getPhone(user.phoneNumber);
                                   // Navigator.pushReplacementNamed(context, YesCreatePassword.id);
-                                  Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context){
+                                  Navigator.of(context).pushReplacement(
+                                      MaterialPageRoute(builder: (context) {
                                     return YesCreatePassword(user.uid);
                                   }));
                                 }
@@ -172,15 +197,17 @@ class AuthProvider with ChangeNotifier {
                           }
                         },
                       ),
-                      SizedBox(height: 30,),
-
+                      SizedBox(
+                        height: 30,
+                      ),
                       SizedBox(
                         height: 20,
                       ),
                       Center(
-                        child: TextButton(onPressed: (){
-                          // Navigator.pushNamed(context, ConfirmedEmail.id);
-                        },
+                        child: TextButton(
+                          onPressed: () {
+                            // Navigator.pushNamed(context, ConfirmedEmail.id);
+                          },
                           child: Text('Resend code'),
                         ),
                       ),
@@ -207,50 +234,72 @@ class AuthProvider with ChangeNotifier {
   //   });
   //   return null;
   // }
-  void savePasswordToDb({String? id,
-    String? password,context}) {
+  void savePasswordToDb({String? id, String? password, context}) {
     _userServices.updateUserData({
       'id': id,
-      'password' : password,
-    }).then((value) => Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context){
-      return SignInWithPhoneNumberAndPassword();
-    })));
+      'password': password,
+    }).then((value) => Navigator.of(context)
+            .pushReplacement(MaterialPageRoute(builder: (context) {
+          return SignInWithPhoneNumberAndPassword();
+        })));
     this.loading = false;
     notifyListeners();
-
   }
 //-------------------Save Delivery Boys data to Firestore-----------------
+
+  void createDependant(
+      {String? dob,
+      String? id_number,
+      String? gender,
+      String? insurance_number,
+      String? names,
+      String? phone_number,
+      String? usersId,
+      String? usersPhoneNumber,
+      String? weight}) {
+    _dependantServices.createDependantData({
+      'accVerified': false,
+      'country': "Rwanda",
+      'date_of_birth': dob,
+      'gender': gender,
+      'id_number': id_number,
+      'insurance_number': insurance_number,
+      'names': names,
+      'phone_number': phone_number,
+      'usersId': usersId,
+      'usersPhoneNumber': usersPhoneNumber,
+      'weight': weight
+    });
+    this.loading = false;
+    notifyListeners();
+  }
 
   void _createUser({String? id, String? number}) {
     _userServices.createUserData({
       'id': id,
       'number': number,
-      'password' : this.password,
+      'password': this.password,
       'latitude': this.latitude,
       'longitude': this.longitude,
       'address': this.address,
       'location': this.location,
-      'firstName' : ' ',
-      'lastName' : ' '
-
+      'firstName': ' ',
+      'lastName': ' '
     });
     this.loading = false;
     notifyListeners();
   }
+
   void login({String? phone, String? password}) {
     _userServices.Login({
-
       'number': phone,
-      'password' : password,
-
-
+      'password': password,
     });
     this.loading = false;
     notifyListeners();
   }
 
-  void updateUser({String? id,
-    String? number}) {
+  void updateUser({String? id, String? number}) {
     _userServices.updateUserData({
       'id': id,
       'number': number,
@@ -259,13 +308,15 @@ class AuthProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  getUserDetails()async {
-    DocumentSnapshot result = await FirebaseFirestore.instance.collection('patients').doc(
-        _auth.currentUser!.uid).get();
-    if(result !=null){
+  getUserDetails() async {
+    DocumentSnapshot result = await FirebaseFirestore.instance
+        .collection('patients')
+        .doc(_auth.currentUser!.uid)
+        .get();
+    if (result != null) {
       this.snapshot = result;
       notifyListeners();
-    }else{
+    } else {
       this.snapshot = null;
       notifyListeners();
     }

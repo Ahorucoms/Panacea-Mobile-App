@@ -24,22 +24,22 @@ import 'package:panacea/screens/yes/send_key_to_phonme_number.dart';
 import 'package:panacea/services/user_simple_preferences.dart';
 import 'package:provider/provider.dart';
 
-void main() async{
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   await UserSimplePreferences.init();
   runApp(
-      MultiProvider(
-        providers: [
-          ChangeNotifierProvider(
-            create: (_) => AuthProvider(),
-          ),
-          ChangeNotifierProvider(
-            create: (_) => LocationProvider(),
-          ),
-        ],
-          child: MyApp(),
-      ),
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider(
+          create: (_) => AuthProvider(),
+        ),
+        ChangeNotifierProvider(
+          create: (_) => LocationProvider(),
+        ),
+      ],
+      child: MyApp(),
+    ),
   );
 }
 
@@ -48,14 +48,13 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-
       supportedLocales: [
-        Locale('en','US'),
+        Locale('en', 'US'),
       ],
       localizationsDelegates: [
-        CountryLocalizations.delegate,// Use for all countries name show in english
+        CountryLocalizations
+            .delegate, // Use for all countries name show in english
       ],
-
       debugShowCheckedModeBanner: false,
       title: 'PANACEA',
       theme: ThemeData(
@@ -63,23 +62,23 @@ class MyApp extends StatelessWidget {
       ),
       initialRoute: OnBoardingScreen.id,
       routes: {
-        OnBoardingScreen.id:(context) => OnBoardingScreen(),
-        SignUpOptions.id:(context) =>SignUpOptions(),
-        SignInOptions.id:(context) =>SignInOptions(),
-        SignInEmail.id:(context) => SignInEmail(),
-        ConfirmEmail.id:(context) => ConfirmEmail(),
-        ConfirmedEmail.id:(context) => ConfirmedEmail(),
-        CreatePassword.id:(context) => CreatePassword(),
-        CreateAccount.id:(context) => CreateAccount(),
-        SignInWithPhoneNumber.id:(context)=> SignInWithPhoneNumber(),
-        MultipleSignUpOptions.id:(context) => MultipleSignUpOptions(),
-        BackupKeys.id:(context) => BackupKeys(),
-        SendKeyToPhoneNumber.id:(context) => SendKeyToPhoneNumber(),
-        SendKeyToEmail.id:(context) => SendKeyToEmail(),
-        VerifyPhoneNumber.id:(context) => VerifyPhoneNumber(),
-        YesCreatePassword.id:(context) => YesCreatePassword(""),
-        NoSignInWithPhoneNumber.id:(context) => NoSignInWithPhoneNumber(),
-        HomeScreen.id:(context)=> HomeScreen(),
+        OnBoardingScreen.id: (context) => OnBoardingScreen(),
+        SignUpOptions.id: (context) => SignUpOptions(),
+        SignInOptions.id: (context) => SignInOptions(),
+        SignInEmail.id: (context) => SignInEmail(),
+        ConfirmEmail.id: (context) => ConfirmEmail(),
+        ConfirmedEmail.id: (context) => ConfirmedEmail(),
+        CreatePassword.id: (context) => CreatePassword(),
+        CreateAccount.id: (context) => CreateAccount(),
+        SignInWithPhoneNumber.id: (context) => SignInWithPhoneNumber(),
+        MultipleSignUpOptions.id: (context) => MultipleSignUpOptions(),
+        BackupKeys.id: (context) => BackupKeys(),
+        SendKeyToPhoneNumber.id: (context) => SendKeyToPhoneNumber(),
+        SendKeyToEmail.id: (context) => SendKeyToEmail(),
+        VerifyPhoneNumber.id: (context) => VerifyPhoneNumber(),
+        YesCreatePassword.id: (context) => YesCreatePassword(""),
+        NoSignInWithPhoneNumber.id: (context) => NoSignInWithPhoneNumber(),
+        HomeScreen.id: (context) => HomeScreen(),
       },
     );
   }

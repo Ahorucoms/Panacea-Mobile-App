@@ -8,22 +8,24 @@ import 'package:panacea/screens/home-screen.dart';
 import 'package:international_phone_input/international_phone_input.dart';
 import 'package:panacea/widgets/size_configs.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class SignInWithPhoneNumberAndPassword extends StatefulWidget {
   static const String id = 'sign-in-with-phone-number-and-password';
 
   @override
-  _SignInWithPhoneNumberAndPasswordState createState() => _SignInWithPhoneNumberAndPasswordState();
+  _SignInWithPhoneNumberAndPasswordState createState() =>
+      _SignInWithPhoneNumberAndPasswordState();
 }
 
-class _SignInWithPhoneNumberAndPasswordState extends State<SignInWithPhoneNumberAndPassword> {
-
+class _SignInWithPhoneNumberAndPasswordState
+    extends State<SignInWithPhoneNumberAndPassword> {
   FirebaseAuth auth = FirebaseAuth.instance;
   final _formKey = GlobalKey<FormState>();
   var _passwordTextController = TextEditingController();
   Icon? icon;
   bool _visible = false;
-  String password='';
+  String password = '';
   String? confirmPassword;
   bool _isLoading = false;
   String? number;
@@ -31,8 +33,8 @@ class _SignInWithPhoneNumberAndPasswordState extends State<SignInWithPhoneNumber
   var _phoneNumberController = TextEditingController();
   String? _phone;
 
-
-  void onPhoneNumberChange(String number, String internationalizedPhoneNumber, String isoCode) {
+  void onPhoneNumberChange(
+      String number, String internationalizedPhoneNumber, String isoCode) {
     setState(() {
       _phone = internationalizedPhoneNumber;
       print(_phone);
@@ -46,7 +48,7 @@ class _SignInWithPhoneNumberAndPasswordState extends State<SignInWithPhoneNumber
     return SafeArea(
       child: Scaffold(
         backgroundColor: Colors.white,
-        resizeToAvoidBottomInset : false,
+        resizeToAvoidBottomInset: false,
         body: Padding(
           padding: const EdgeInsets.only(left: 20, right: 20),
           child: Column(
@@ -55,11 +57,14 @@ class _SignInWithPhoneNumberAndPasswordState extends State<SignInWithPhoneNumber
                 height: SizeConfig.screenHeight! * .075,
               ),
               Container(
-                child: Center(child: Text('Welcome back to PANACEA',
-                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-                textAlign: TextAlign.center,)
-                  // Text('Sign In')
-                ),
+                child: Center(
+                    child: Text(
+                  'Welcome back to PANACEA',
+                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                  textAlign: TextAlign.center,
+                )
+                    // Text('Sign In')
+                    ),
               ),
               SizedBox(
                 height: SizeConfig.screenHeight! * .075,
@@ -68,12 +73,12 @@ class _SignInWithPhoneNumberAndPasswordState extends State<SignInWithPhoneNumber
                 child: Container(
                   decoration: BoxDecoration(
                       border: Border.all(),
-                      borderRadius: BorderRadius.circular(16.0)
-                  ),
+                      borderRadius: BorderRadius.circular(16.0)),
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: InternationalPhoneInput(
-                      decoration: InputDecoration.collapsed(hintText: 'Your phone number'),
+                      decoration: InputDecoration.collapsed(
+                          hintText: 'Your phone number'),
                       onPhoneNumberChange: onPhoneNumberChange,
                       initialPhoneNumber: _phone,
                       initialSelection: 'RW',
@@ -83,24 +88,23 @@ class _SignInWithPhoneNumberAndPasswordState extends State<SignInWithPhoneNumber
                   ),
                 ),
               ),
-              SizedBox( height: SizeConfig.screenHeight! * .025,),
+              SizedBox(
+                height: SizeConfig.screenHeight! * .025,
+              ),
               Container(
                 child: TextFormField(
-
-
-
                   cursorColor: Colors.black,
                   style: TextStyle(color: Colors.black),
                   controller: _passwordTextController,
-                  validator: (value){
+                  validator: (value) {
                     setState(() {
                       password = value.toString();
                     });
 
-                    if(value!.isEmpty){
+                    if (value!.isEmpty) {
                       return 'Please Enter a Password';
                     }
-                    if(value.length < 8){
+                    if (value.length < 8) {
                       return 'Password must be at least 8 characters';
                     }
 
@@ -111,14 +115,14 @@ class _SignInWithPhoneNumberAndPasswordState extends State<SignInWithPhoneNumber
                     suffixIcon: IconButton(
                       icon: _visible
                           ? Icon(
-                        Icons.visibility,
-                        color: Colors.black,
-                      )
+                              Icons.visibility,
+                              color: Colors.black,
+                            )
                           : Icon(
-                        Icons.visibility_off,
-                        color: Colors.black,
-                      ),
-                      onPressed: (){
+                              Icons.visibility_off,
+                              color: Colors.black,
+                            ),
+                      onPressed: () {
                         setState(() {
                           _visible = !_visible;
                         });
@@ -133,59 +137,109 @@ class _SignInWithPhoneNumberAndPasswordState extends State<SignInWithPhoneNumber
                     labelText: 'Password',
                     labelStyle: TextStyle(color: Colors.black),
                     focusedBorder: UnderlineInputBorder(
-                      borderSide: BorderSide(
-                          color: Colors.black,
-                          width: 2
-                      ),
+                      borderSide: BorderSide(color: Colors.black, width: 2),
                     ),
                     focusColor: Colors.black,
                   ),
                 ),
               ),
-              SizedBox( height: SizeConfig.screenHeight! * .080,),
+              SizedBox(
+                height: SizeConfig.screenHeight! * .080,
+              ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  TextButton(onPressed: () async{
-                 await FirebaseFirestore.instance.collection('users')
-                       .where('number',isEqualTo: _phone)
-                       // .where('password',isEqualTo: password)
-                       .get().then((value) {
-                        if(value.size==1){
-                            if(value.docs.first['password']==_passwordTextController.text){
-                              // print(value.docs.first['password']);
-                              Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context){
-                                return HomeScreen(uid: value.docs[0].id);
-                              }));
-                            }else{
-                              print("password dont match");
-                            }
-                        }else{
-                          print(value.size);
-                        }
-                 });
-                // print("this is resulr ${result}");
-                    // auth.login(phone: "+250780640237",password: "12345678");
-                    // if(_phone == ""){
-                    //   setState(() {
-                    //     print('Your phone number could not be validated');
-                    //   });
-                    // }
+                  TextButton(
+                      onPressed: () async {
+                        await FirebaseFirestore.instance
+                            .collection('users')
+                            .where('number', isEqualTo: _phone)
+                            // .where('password',isEqualTo: password)
+                            .get()
+                            .then((value) async {
+                          print(_phone);
+                          if (value.size == 1) {
+                            print(value.docs.first['password']);
 
-                  },
+                            if (value.docs.first['password'] ==
+                                _passwordTextController.text) {
+                              final prefs =
+                                  await SharedPreferences.getInstance();
+                              prefs.setString("uid", value.docs[0].id);
+                              prefs.setString("phone", "$_phone");
+
+                              // print(value.docs.first['password']);
+                              Navigator.pushAndRemoveUntil(context,
+                                  MaterialPageRoute(builder: (context) {
+                                return HomeScreen(uid: value.docs[0].id);
+                              }), (_) => false);
+                            } else {
+                              // print
+                              return showDialog(
+                                context: context,
+                                builder: (ctx) => AlertDialog(
+                                  title: Text("Login Fail"),
+                                  content: Text(
+                                      "Entered Information don't match ours"),
+                                  actions: <Widget>[
+                                    FlatButton(
+                                      onPressed: () {
+                                        setState(() {
+                                          // isLoading = false;
+                                        });
+                                        Navigator.of(ctx).pop();
+                                      },
+                                      child: Text("close"),
+                                    ),
+                                  ],
+                                ),
+                              );
+                            }
+                          } else {
+                            return showDialog(
+                              context: context,
+                              builder: (ctx) => AlertDialog(
+                                title: Text("Login Fail"),
+                                content: Text(
+                                    "Entered Information don't match ours"),
+                                actions: <Widget>[
+                                  FlatButton(
+                                    onPressed: () {
+                                      setState(() {
+                                        // isLoading = false;
+                                      });
+                                      Navigator.of(ctx).pop();
+                                    },
+                                    child: Text("close"),
+                                  ),
+                                ],
+                              ),
+                            );
+                          }
+                        });
+                        // print("this is resulr ${result}");
+                        // auth.login(phone: "+250780640237",password: "12345678");
+                        // if(_phone == ""){
+                        //   setState(() {
+                        //     print('Your phone number could not be validated');
+                        //   });
+                        // }
+                      },
                       child: Text('Log in')),
                 ],
               ),
-              SizedBox(height: SizeConfig.screenHeight! * .120,),
+              SizedBox(
+                height: SizeConfig.screenHeight! * .120,
+              ),
               TextButton(
-                  onPressed: (){},
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text('Forgot password?'),
-                      Icon(CupertinoIcons.forward),
-                    ],
-                  ),
+                onPressed: () {},
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text('Forgot password?'),
+                    Icon(CupertinoIcons.forward),
+                  ],
+                ),
               ),
             ],
           ),
@@ -194,4 +248,3 @@ class _SignInWithPhoneNumberAndPasswordState extends State<SignInWithPhoneNumber
     );
   }
 }
-
