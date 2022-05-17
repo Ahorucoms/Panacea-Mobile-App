@@ -1,6 +1,7 @@
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
+import 'package:panacea/pages/book_appointment.dart';
 import 'package:provider/provider.dart';
 
 class HospitalDetailsPage extends StatefulWidget {
@@ -55,7 +56,11 @@ class _HospitalDetailsPageState extends State<HospitalDetailsPage> {
       ),
       bottomNavigationBar: TextButton(
         child: Text("Book an Appointment"),
-        onPressed: () {},
+        onPressed: () {
+          Navigator.of(context).push(MaterialPageRoute(builder: (context) {
+            return BookAppointmentPage(services: services);
+          }));
+        },
       ),
       body: Padding(
         padding: const EdgeInsets.only(top: 12),
@@ -113,7 +118,9 @@ class _HospitalDetailsPageState extends State<HospitalDetailsPage> {
                         values.forEach((key, values) {
                           values['uid'] = key;
                           if (values['code'] == widget.code) {
+                            //   setState(() {
                             services.add(values);
+                            // });
                           }
                         });
                         print(services);

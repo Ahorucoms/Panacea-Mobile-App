@@ -151,13 +151,20 @@ class _SignInWithPhoneNumberAndPasswordState
                 children: [
                   TextButton(
                       onPressed: () async {
+                        setState(() {
+                          _isLoading = true;
+                        });
                         await FirebaseFirestore.instance
                             .collection('users')
-                            .where('number', isEqualTo: _phone)
+                            .where('number', isEqualTo: "$_phone")
                             // .where('password',isEqualTo: password)
                             .get()
                             .then((value) async {
-                          print(_phone);
+                          setState(() {
+                            _isLoading = false;
+                          });
+                          print(_phoneNumberController.text);
+                          // print(value.docs.first['password']);
                           if (value.size == 1) {
                             print(value.docs.first['password']);
 
@@ -225,7 +232,9 @@ class _SignInWithPhoneNumberAndPasswordState
                         //   });
                         // }
                       },
-                      child: Text('Log in')),
+                      child: _isLoading
+                          ? CircularProgressIndicator()
+                          : Text('Log in')),
                 ],
               ),
               SizedBox(
