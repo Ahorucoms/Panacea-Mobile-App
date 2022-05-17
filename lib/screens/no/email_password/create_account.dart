@@ -1,8 +1,9 @@
+import 'package:email_auth/email_auth.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:panacea/screens/no/email_password/confirm_email.dart';
 import 'package:panacea/screens/sign_up_options.dart';
+
 
 class CreateAccount extends StatefulWidget {
   static const String id = 'create-account';
@@ -17,8 +18,44 @@ class _CreateAccountState extends State<CreateAccount> {
   Icon? icon;
   bool _visible = false;
   var _emailTextController = TextEditingController();
+  final  TextEditingController _otpcontroller = TextEditingController();
   String? email;
   String? password;
+  bool submitValid = false;
+  late EmailAuth emailAuth;
+
+  @override
+  void initState() {
+    super.initState();
+    // Initialize the package
+    emailAuth = new EmailAuth(
+      sessionName: "PANACEA",
+    );
+  }
+
+  void sendOTP() async {
+    bool result = await emailAuth.sendOtp(
+        recipientMail: _emailTextController.value.text, otpLength: 5);
+    if (result) {
+      // using a void function because i am using a
+      // stateful widget and seting the state from here.
+      setState(() {
+        submitValid = true;
+      });
+    }
+  }
+ void verifyOTP() async{
+   bool result = await emailAuth.validateOtp(
+       recipientMail: _emailTextController.value.text,
+       userOtp: _otpcontroller.value.text);
+   if (result) {
+     // using a void function because i am using a
+     // stateful widget and seting the state from here.
+     print('Email Verified');
+   }
+ }
+  
+
 
   @override
   Widget build(BuildContext context) {
@@ -93,16 +130,33 @@ class _CreateAccountState extends State<CreateAccount> {
                     focusColor: Colors.black,
                   ),
                 ),
-
               ),
               SizedBox(
                 height: 80,
               ),
+              TextField(
+                controller: _otpcontroller,
+                keyboardType: TextInputType.number,
+                obscureText: true,
+                decoration: InputDecoration(
+                  hintText: 'Enter OTP',
+                  labelText: 'OTP'
+                ),
+              ),
+              SizedBox(
+                height: 10,
+              ),
               Center(
-                child: TextButton(onPressed: (){
-                  Navigator.pushNamed(context, ConfirmEmail.id);
-                },
-                  child: Text('Send'),
+                child: TextButton(onPressed: () => sendOTP(),
+                  child: Text('Send OTP'),
+                ),
+              ),
+              SizedBox(
+                height: 10,
+              ),
+              Center(
+                child: TextButton(onPressed: () => verifyOTP(),
+                  child: Text('Send OTP'),
                 ),
               ),
               SizedBox(

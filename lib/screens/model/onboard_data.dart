@@ -15,6 +15,11 @@ class OnBoarding {
 List<OnBoarding> onboardingContents = [
   OnBoarding(
     title: 'PANACEA',
+    text: 'Browse nearby HealthCare Services',
+    text1: 'Set Location to browse nearby Hospitals and Pharmacies to Order your medics',
+  ),
+  OnBoarding(
+    title: 'PANACEA',
     text: 'Browse Medical Products',
     text1: 'Medicines and other pharmaceutical products on your app with regular discounts',
   ),

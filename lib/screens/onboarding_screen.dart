@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:panacea/screens/model/onboard_data.dart';
 import 'package:panacea/screens/sign_in_options.dart';
 import 'package:panacea/screens/sign_up_options.dart';
+import 'package:panacea/screens/welcome_screen.dart';
 import 'package:panacea/widgets/app_large_text.dart';
 import 'package:panacea/widgets/app_styles.dart';
 import 'package:panacea/widgets/size_configs.dart';
@@ -83,7 +84,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
                             Center(
                               child: TextButton(
                                 onPressed: (){
-                                  Navigator.pushNamed(context, SignUpOptions.id);
+                                  Navigator.pushNamed(context, WelcomeScreen.id);
                                 },
                                 child: Row(
                                   mainAxisAlignment: MainAxisAlignment.center,

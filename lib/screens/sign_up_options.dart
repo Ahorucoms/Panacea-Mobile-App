@@ -1,9 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:panacea/screens/multiple_sign_up_options.dart';
-import 'package:panacea/screens/sign_in_options.dart';
 import 'package:panacea/screens/yes/backup_keys.dart';
 import 'package:panacea/widgets/app_large_text.dart';
+
+import 'no/phone_password/sign-in-with-phone-number.dart';
 
 class SignUpOptions extends StatelessWidget {
  static const String id = 'sign-up-screen';
@@ -52,28 +53,14 @@ class SignUpOptions extends StatelessWidget {
                   ),
                 SizedBox(width: 20,),
                  TextButton(onPressed: (){
-                   Navigator.pushNamed(context, MultipleSignUpOptions.id);
+                   Navigator.pushNamed(context, SignInWithPhoneNumber.id);
                  },
                         child: Center(child: Text('NO'))),
 
 
 
               ],
-            )
-              // Container(
-              //   height: 80,
-              //   width: 80,
-              //   decoration: BoxDecoration(
-              //     borderRadius: BorderRadius.circular(20),
-              //     color: Colors.white,
-              //     image: DecorationImage(
-              //       image: AssetImage(
-              //           'images/person.png'
-              //       ),
-              //       fit: BoxFit.cover,
-              //     )
-              //   ),
-              // )
+            ),
             ],
           ),
         ),

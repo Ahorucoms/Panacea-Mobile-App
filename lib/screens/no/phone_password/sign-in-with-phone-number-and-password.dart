@@ -1,7 +1,11 @@
+import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:local_auth/local_auth.dart';
 import 'package:panacea/providers/auth_provider.dart';
 import 'package:panacea/providers/location_provider.dart';
 import 'package:panacea/screens/home-screen.dart';
@@ -12,6 +16,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class SignInWithPhoneNumberAndPassword extends StatefulWidget {
   static const String id = 'sign-in-with-phone-number-and-password';
+
+  // late final bool wantsTouchId;
 
   @override
   _SignInWithPhoneNumberAndPasswordState createState() =>
@@ -30,8 +36,46 @@ class _SignInWithPhoneNumberAndPasswordState
   bool _isLoading = false;
   String? number;
   bool _validPhoneNumber = false;
+  bool _isBiometricUsed = false;
   var _phoneNumberController = TextEditingController();
   String? _phone;
+
+  final LocalAuthentication localAuth = LocalAuthentication();
+  final storage = FlutterSecureStorage();
+
+
+  // @override
+  // void initState() {
+  //   super.initState();
+  //   if(widget.wantsTouchId){
+  //     authenticate();
+  //   }
+  // }
+
+  void authenticate() async{
+    final canCheck = await localAuth.canCheckBiometrics;
+
+    if(canCheck){
+      List<BiometricType> availableBiometrics =
+          await localAuth.getAvailableBiometrics();
+      
+      if(Platform.isIOS){
+        if(availableBiometrics.contains(BiometricType.face)){
+          //Face ID
+         final authenticated = await localAuth.authenticate(localizedReason: 'Enable Face Id To Sign in more easily');
+         if(authenticated){
+           storage.write(key: 'number', value: _phone);
+           storage.write(key: 'password', value: null);
+           storage.write(key: 'usingBiometric', value: 'true');
+         }
+        } else if(availableBiometrics.contains(BiometricType.fingerprint)){
+          // Touch ID
+        }
+      }
+    }else {
+      print('cant check');
+    }
+  }
 
   void onPhoneNumberChange(
       String number, String internationalizedPhoneNumber, String isoCode) {
@@ -144,7 +188,29 @@ class _SignInWithPhoneNumberAndPasswordState
                 ),
               ),
               SizedBox(
-                height: SizeConfig.screenHeight! * .080,
+                height: SizeConfig.screenHeight! * .010,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  // Checkbox(activeColor: Colors.orange,
+                  //     value: widget.wantsTouchId,
+                  //     onChanged: (newValue){
+                  //   setState(() {
+                  //     widget.wantsTouchId = newValue!;
+                  //   });
+                  //     }),
+                  SizedBox(height: 20.0,),
+                  Text('Use Touch ID',
+                    style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 16.0
+                    ),),
+                ],
+              ),
+
+              SizedBox(
+                height: SizeConfig.screenHeight! * .040,
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,

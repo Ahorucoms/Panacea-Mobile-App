@@ -223,17 +223,6 @@ class AuthProvider with ChangeNotifier {
     });
   }
 
-  //-------------------Save Password data to Firestore-----------------
-  // Future<void>? savePasswordToDb({ String? password, context}) {
-  //   User? user = FirebaseAuth.instance.currentUser;
-  //   _users.doc(this.number).update({
-  //     'id': user!.uid,
-  //     'password' : password,
-  //   }).whenComplete(() {
-  //     Navigator.pushReplacementNamed(context, HomeScreen.id);
-  //   });
-  //   return null;
-  // }
   void savePasswordToDb({String? id, String? password, context}) {
     _userServices.updateUserData({
       'id': id,

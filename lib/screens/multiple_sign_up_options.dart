@@ -5,6 +5,8 @@ import 'package:panacea/widgets/app_large_text.dart';
 import 'package:panacea/widgets/app_text.dart';
 import 'package:panacea/widgets/size_configs.dart';
 
+import 'no/email_password/create_account.dart';
+
 class MultipleSignUpOptions extends StatelessWidget {
   static const String id = 'multiple-sign-up-options';
 
@@ -50,7 +52,7 @@ class MultipleSignUpOptions extends StatelessWidget {
                 child: Row(
                   children: [
                     TextButton(onPressed: (){
-                      Navigator.pushNamed(context, SignInEmail.id);
+                      Navigator.pushNamed(context, CreateAccount.id);
                     },
                       child: Text('Sign Up with email'),),
                     SizedBox(width: SizeConfig.screenWidth! * .012,),

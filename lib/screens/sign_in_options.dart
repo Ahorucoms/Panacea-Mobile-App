@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:panacea/screens/no/email_password/sign-in-email.dart';
+import 'package:panacea/screens/no/phone_password/sign-in-with-phone-number-and-password.dart';
 import 'package:panacea/screens/no/phone_password/sign-in-with-phone-number.dart';
 import 'package:panacea/widgets/app_large_text.dart';
 import 'package:panacea/widgets/app_text.dart';
@@ -75,7 +76,7 @@ class SignInOptions extends StatelessWidget {
                       child: TextButton(
                         onPressed: () {
                           Navigator.pushNamed(
-                              context, SignInWithPhoneNumber.id);
+                              context, SignInWithPhoneNumberAndPassword.id);
                         },
                         child: Text('Telephone number'),
                       ),

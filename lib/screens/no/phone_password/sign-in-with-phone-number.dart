@@ -99,8 +99,13 @@ class _SignInWithPhoneNumberState extends State<SignInWithPhoneNumber> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                       TextButton(onPressed: () {
-
-
+                        setState((){
+                          auth.loading=true;
+                          auth.screen = 'MapScreen';
+                          auth.latitude = locationData.latitude;
+                          auth.longitude=locationData.longitude;
+                          auth.address = locationData.selectedAddress.addressLine;
+                        });
                         String number ='${_phone}';
                         auth.verifyPhone(
                           context: context,
@@ -157,19 +162,19 @@ class _SignInWithPhoneNumberState extends State<SignInWithPhoneNumber> {
                 ],
                 ),
                 SizedBox(height: 40,),
-                Padding(
-                  padding: const EdgeInsets.only(bottom: 10),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text('Not having Account?'),
-                      TextButton(onPressed: (){
-                        Navigator.pushNamed(context, VerifyPhoneNumber.id);
-                      },
-                          child: Text('Sign Up Now'))
-                    ],
-                  ),
-                )
+                // Padding(
+                //   padding: const EdgeInsets.only(bottom: 10),
+                //   child: Row(
+                //     mainAxisAlignment: MainAxisAlignment.center,
+                //     children: [
+                //       Text('Having Account?'),
+                //       TextButton(onPressed: (){
+                //         Navigator.pushNamed(context, SignInWithPhoneNumberAndPassword.id);
+                //       },
+                //           child: Text('Sign In Now'))
+                //     ],
+                //   ),
+                // )
               ],
             ),
           ),
